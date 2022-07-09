@@ -38,22 +38,32 @@ export function clear(...htmlElements) {
   });
 }
 
+export function findNoteIndex(element) {
+  return Number(
+    element.parentNode.parentNode.parentNode.firstElementChild.textContent
+  );
+}
+
+export function fillmodal(note, element) {
+  element.value = note.note;
+}
+
 function fillElement(number, title) {
   return `
     <th>${number}</th>
     <td>${title}</td>
     <td>
       <button
-        class="btn btn-outline-primary rounded-circle btn-sm"
+        class="btn btn-outline-primary rounded-circle btn-sm show-modal"
         data-bs-target="#modal"
         data-bs-toggle="modal"
       >
-        <i class="bi bi-eye"></i>
+        <i class="bi bi-eye show-modal"></i>
       </button>
     </td>
     <td>
-      <button class="btn btn-outline-danger rounded-circle btn-sm">
-      <i class="bi bi-trash"></i>
+      <button class="btn btn-outline-danger rounded-circle btn-sm delete-note">
+      <i class="bi bi-trash delete-note"></i>
       </button>
     </td>
 `;
