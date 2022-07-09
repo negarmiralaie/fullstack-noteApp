@@ -48,16 +48,20 @@ function addNote() {
 }
 
 function tableClick(e) {
+  currentIndexClicked = utils.findNoteIndex(e.target) - 1;
+
   if (e.target.classList.contains("show-modal")) {
     variables.modalSubmitBtn.disabled = true;
     //show modal and fill with data
-    currentIndexClicked = utils.findNoteIndex(e.target) - 1;
-
     utils.fillmodal(notes[currentIndexClicked], variables.modalNote);
   }
 
   if (e.target.classList.contains("delete-note")) {
-    //delete note
+    if (confirm("sure to delete?")) {
+      notes.splice(currentIndexClicked, 1);
+      utils.updateDB(key, notes);
+      utils.tableInit(notes, variables.table);
+    }
   }
 }
 

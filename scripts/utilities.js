@@ -25,6 +25,8 @@ export function updateTable(note, htmlElement, notes) {
 }
 
 export function tableInit(notes, htmlElement) {
+  htmlElement.firstElementChild.innerHTML = "";
+
   notes.map((note, index) => {
     let element = document.createElement("tr");
     element.innerHTML = fillElement(index + 1, note.title);
