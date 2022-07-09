@@ -6,4 +6,4 @@ export const title = document.querySelector("#title"),
   modalSubmitBtn = document.querySelector("#modal-submit");
 
 export let notes = [];
-export let key = "notes";
+export const key = "notes";
