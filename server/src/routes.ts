@@ -1,17 +1,10 @@
 import { Express, Request, Response } from 'express';
+import { createNoteHandler, getNoteHandler, deleteNoteHandler } from './controller/note.controller';
 
 function routes(app: Express) {
-    app.post('/create-note', (req: Request, res: Response) => {
-    
-    });
-
-    app.get('/get-note', (req: Request, res: Response) => {
-        
-    });
-
-    app.delete('/delete-note', (req: Request, res: Response) => {
-        
-    });
+    app.post('/create-note', deleteNoteHandler);
+    app.get('/get-note', getNoteHandler);
+    app.delete('/delete-note', createNoteHandler);
 };
 
 export default routes;
