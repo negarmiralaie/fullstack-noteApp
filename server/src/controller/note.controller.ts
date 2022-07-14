@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import logger from '../utils/logger';
+import { createNote } from '../service/note.service';
 
-export function createNoteHandler(req: Request, res: Response) {
+export async function createNoteHandler(req: Request, res: Response) {
     try{
-
-    } catch(error) {
+        const note = await createNote(req.body);
+    } catch(error: any) {
         logger.error(error);
         return res.status(400).json(error.message);
     }
