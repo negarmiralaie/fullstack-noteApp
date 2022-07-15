@@ -1,26 +1,17 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { customAlphabet } from 'nanoid';
+import { NoteDocument } from '../utils/interfaces/note.interface';
 
-const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
+// const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 10);
 
-export interface NoteField {
-    title: string,
-    description: string,
-};
-
-export interface NoteDocument extends NoteField, mongoose.Document {
-    createdAt: Date,
-    updatedAt: Date,
-};
-
-const noteSchema = new mongoose.Schema(
+const noteSchema = new Schema(
   {
-    noteId: {
-        type: String,
-        required: true,
-        unique: true,
-        default: () => `note_${nanoid()}`,
-    },
+    // noteId: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    //     default: () => `note_${nanoid()}`,
+    // },
     title: {
         type: String,
         required: true,
@@ -35,5 +26,5 @@ const noteSchema = new mongoose.Schema(
   }
 );
 
-const NoteModel = mongoose.model<NoteDocument>("NoteSchema", noteSchema);
+const NoteModel = model<NoteDocument>("NoteSchema", noteSchema);
 export default NoteModel;
