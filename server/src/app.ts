@@ -54,7 +54,7 @@ class App {
         this.express.listen(this.port, () => {
             console.log(`App is listening on port ${this.port}`);
         })
-    }
+    };
 };
 
 export default App;
