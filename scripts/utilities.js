@@ -3,9 +3,12 @@ export function isEmpty(htmlElement) {
   return htmlElement.value == "";
 }
 
-//function for extract info from DB via passed key
-export function getFromDB(key) {
+//function for get the note via its id (if id was empty return all notes)
+export function getFromDB(id = "") {
   let data = [];
+  // call api for get info
+  /*
+    let data = [];
 
   data = JSON.parse(localStorage.getItem(key));
   if (data == null) {
@@ -13,32 +16,45 @@ export function getFromDB(key) {
   }
 
   return data;
+  */
+
+  return data;
 }
 
-//function for update DB via key and newData for set
-export function updateDB(key, data) {
+//function for add a note to DB (data is a object)
+export function insertNoteToDB(data) {
   //localStorage.setItem(key, JSON.stringify(data));
+  //here should return created ID
 
-  const fetchUsers = () => {
-    axios
-      .post("http://localhost:3000/notes/create", {
-        title: data.title,
-        description: data.note,
-      })
-      .then((response) => {
-        //const users = response.data.data;
-        console.log(response);
-      })
-      .catch((error) => console.error(error));
-  };
+  return "abc123";
 
-  fetchUsers();
+  axios
+    .post("http://localhost:3000/notes/create", {
+      title: data.title,
+      description: data.note,
+    })
+    .then((response) => {
+      //const users = response.data.data;
+      console.log(response);
+    })
+    .catch((error) => console.error(error));
+}
+
+//function for delete a note from DB (id of note is argument)
+export function deleteNoteFromDB(id) {
+  //call api for delete note with id
+}
+
+//function for update a note in DB (data is a object , just replace the object in DB with its id)
+export function updateNoteInDB(data) {
+  //call api for update note with id=data.id => then =>
+  // description object in DB with id=data.id = data.note
 }
 
 //function for update and add new note to data table
-export function updateTable(note, htmlElement, notes) {
+export function updateTable(note, htmlElement, notesLength) {
   let element = document.createElement("tr");
-  element.innerHTML = fillElement(notes.length, note.title);
+  element.innerHTML = fillElement(notesLength, note);
 
   htmlElement.firstElementChild.appendChild(element);
 }
@@ -49,7 +65,7 @@ export function tableInit(notes, htmlElement) {
 
   notes.map((note, index) => {
     let element = document.createElement("tr");
-    element.innerHTML = fillElement(index + 1, note.title);
+    element.innerHTML = fillElement(index + 1, note);
     htmlElement.firstElementChild.appendChild(element);
   });
 }
@@ -68,16 +84,21 @@ export function findNoteIndex(element) {
   );
 }
 
+//function for find the note data-id in table base on clicking on the table
+export function findNoteDataID(element) {
+  return element.parentNode.parentNode.parentNode.firstElementChild.dataset.id;
+}
+
 //functino for fill the show modal via passed html element(textarea) and information(note.note property)
 export function fillmodal(note, element) {
   element.value = note.note;
 }
 
 //functino for fill and create the table data row via number of row and note tile
-function fillElement(number, title) {
+function fillElement(number, note) {
   return `
-    <th>${number}</th>
-    <td>${title}</td>
+    <th data-id=${note.id}>${number}</th>
+    <td>${note.title}</td>
     <td>
       <button
         class="btn btn-outline-primary rounded-circle btn-sm show-modal"

@@ -6,7 +6,6 @@ import * as utils from "./utilities.js";
 ////////// assing variables that will be use very much for shorter syntax //////////
 
 let notes = variables.notes;
-const key = variables.key;
 
 ////////// assing variables that will be use very much for shorter syntax //////////
 
@@ -34,7 +33,7 @@ function eventListener() {
 
 //function for initializing the app and fetch data and fill up data table
 function appInit() {
-  notes = utils.getFromDB(key);
+  notes = utils.getFromDB();
   utils.tableInit(notes, variables.table);
 }
 
@@ -54,11 +53,13 @@ function submitNote(event) {
 function addNote() {
   //push the created note to notes array
   const note = { title: variables.title.value, note: variables.note.value };
-  notes.push(note);
 
   //update table and DB
-  utils.updateTable(note, variables.table, notes);
-  utils.updateDB(key, note);
+  let noteID = utils.insertNoteToDB(note);
+  note.id = noteID;
+  notes.push(note);
+
+  utils.updateTable(note, variables.table, notes.length);
 
   //clear the inputs
   utils.clear(variables.note, variables.title);
@@ -83,8 +84,10 @@ function tableClick(e) {
     if (confirm("sure to delete?")) {
       //delete the note from notes array
       notes.splice(currentIndexClicked, 1);
-      //update DB with new data
-      utils.updateDB(key, notes);
+
+      //delete the note from DB
+      utils.deleteNoteFromDB(notes[currentIndexClicked].id);
+
       //update data table with new data
       utils.tableInit(notes, variables.table);
     }
@@ -103,6 +106,6 @@ function editNote(e) {
   //update the note.note property
   notes[currentIndexClicked].note = newNote;
 
-  //update DB with new data
-  utils.updateDB(key, notes);
+  //update note in DB
+  utils.updateNoteInDB(notes[currentIndexClicked]);
 }

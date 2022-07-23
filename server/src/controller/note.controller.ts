@@ -23,6 +23,7 @@ class NoteController implements Controller {
     private createNoteHandler = async (req: Request, res: Response, next: NextFunction) => {
         try{
             const { title, description } = req.body;
+            console.log(req.body)
             const note = await this.NoteService.createNote({ title, description });
             return res.status(201).json({ note });
         } catch (error: any) {
