@@ -17,7 +17,22 @@ export function getFromDB(key) {
 
 //function for update DB via key and newData for set
 export function updateDB(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
+  //localStorage.setItem(key, JSON.stringify(data));
+
+  const fetchUsers = () => {
+    axios
+      .post("http://localhost:3000/notes/create", {
+        title: data.title,
+        description: data.note,
+      })
+      .then((response) => {
+        //const users = response.data.data;
+        console.log(response);
+      })
+      .catch((error) => console.error(error));
+  };
+
+  fetchUsers();
 }
 
 //function for update and add new note to data table

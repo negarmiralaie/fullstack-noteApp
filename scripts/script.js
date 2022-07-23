@@ -58,7 +58,7 @@ function addNote() {
 
   //update table and DB
   utils.updateTable(note, variables.table, notes);
-  utils.updateDB(key, notes);
+  utils.updateDB(key, note);
 
   //clear the inputs
   utils.clear(variables.note, variables.title);
