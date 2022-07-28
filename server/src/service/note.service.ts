@@ -33,6 +33,14 @@ class NoteService {
             throw new Error(error);
         };
     };
+
+    public async getAllTickets () {
+        try{
+            return await NoteModel.find();
+        } catch (error: any) {
+            throw new Error(error);
+        };
+    };
 };
 
 export default NoteService;

@@ -19,6 +19,7 @@ class NoteController implements Controller {
         this.router.put(`${this.path}/edit`, this.editNoteHandler);
         this.router.post(`${this.path}/search`, this.searchNoteHandler);
         this.router.delete(`${this.path}/delete`, this.deleteNoteHandler);
+        this.router.get(`${this.path}/get-all`, this.getAllNotes);
     };
 
     private loadHomePageHandler = async (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +29,15 @@ class NoteController implements Controller {
             next(new HttpException(error.message, error.status));
         }
     };
+
+    private getAllNotes = async (req: Request, res: Response, next: NextFunction) => {
+        try{
+            const tickets = await this.NoteService.getAllTickets();
+            res.json(tickets);
+        } catch (error: any) {
+
+        }
+    }
 
     private createNoteHandler = async (req: Request, res: Response, next: NextFunction) => {
         try{
