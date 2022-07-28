@@ -5,6 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import Controller from '../src/utils/interfaces/controller.interface';
 import ErrorMiddleware from '../src/middleware/error.middleware';
+// import engine from 'consolidate';
 import helmet from 'helmet';
 
 class App {
@@ -29,6 +30,14 @@ class App {
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: true }));
         this.express.use(compression());
+        // let path: Object;
+        // path = ;
+        // this.express.set('view engine', 'html');
+        // this.express.engine('html', require('ejs').renderFile);
+        // this.express.set('views', __dirname + '/public');
+        // this.express.engine('html', engine.mustache);
+        this.express.set('view engine', 'html');
+        this.express.use(express.static(__dirname + 'public'));
     };
 
     private initializeControllers (contollers: Controller[]): void {

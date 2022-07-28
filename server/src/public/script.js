@@ -52,7 +52,15 @@ function submitNote(event) {
 //function for add note to DB and data table
 function addNote() {
   //push the created note to notes array
-  const note = { title: variables.title.value, note: variables.note.value };
+  const note = { title: variables.title.value, description: variables.note.value };
+
+  axios
+  .post("http://localhost:3000/notes/create", note)
+  .then((response) => {
+    //const users = response.data.data;
+    console.log(response);
+  })
+  .catch((error) => console.error(error));
 
   //update table and DB
   let noteID = utils.insertNoteToDB(note);

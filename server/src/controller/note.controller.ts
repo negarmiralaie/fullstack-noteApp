@@ -2,6 +2,7 @@ import { Request, Response, Router, NextFunction } from 'express';
 import Controller from '../utils/interfaces/controller.interface';
 import HttpException from '../utils/exception/http.exception';
 import NoteService from '../service/note.service';
+import path from 'path';
 
 class NoteController implements Controller {
     public path = '/notes';
@@ -13,11 +14,19 @@ class NoteController implements Controller {
     };
 
     private initializeRoutes(): void {
-        console.log('this.path', this.path)
+        this.router.get(`/`, this.loadHomePageHandler);
         this.router.post(`${this.path}/create`, this.createNoteHandler);
         this.router.put(`${this.path}/edit`, this.editNoteHandler);
         this.router.post(`${this.path}/search`, this.searchNoteHandler);
         this.router.delete(`${this.path}/delete`, this.deleteNoteHandler);
+    };
+
+    private loadHomePageHandler = async (req: Request, res: Response, next: NextFunction) => {
+        try{
+            res.sendFile(path.resolve('../server/src/public/index.html'))
+        } catch (error: any) {
+            next(new HttpException(error.message, error.status));
+        }
     };
 
     private createNoteHandler = async (req: Request, res: Response, next: NextFunction) => {
